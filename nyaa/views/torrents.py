@@ -322,8 +322,9 @@ def _delete_torrent(torrent, form, banform):
         uploader_str += " IP({0})".format(ban2.user_ip)
         ban2.user_ip = ban2.user_ip.packed
 
-    log = "Uploader {0} of torrent [#{1}]({2}) has been banned.".format(
-        uploader_str, torrent.id, flask.url_for('torrents.view', torrent_id=torrent.id), action)
+    log = "Uploader {} of torrent [#{}]({}) has been banned for the following reason: {}".format(
+        uploader_str, torrent.id, flask.url_for('torrents.view', torrent_id=torrent.id),
+        banform.reason.data)
     adminlog = models.AdminLog(log=log, admin_id=editor.id)
     db.session.add(adminlog)
 
